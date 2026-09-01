@@ -41,4 +41,5 @@ TODO: Annotate each extension category name that shadows a base category name.
 
 <script>
   init_class_profiles();
+  init_show_deprecated();
 </script>

@@ -83,18 +83,18 @@ function enable_option(name) {
   $(name).removeAttr('disabled');
 }
 
-function init_select() {
+function init_selected_attributes() {
   let selected = refresh_selected_profiles();
-  init_select_picker($("#attributes-select"), selected);
+  init_attributes_select_picker($("#attributes-select"), selected);
 }
 
 function refresh_selected_profiles() {
-  const data = window.localStorage.getItem(storageKey);
+  const data = window.localStorage.getItem(selectedAttributesStorageKey);
   let selected;
 
   if (data == null) {
-    selected = defaultSelectedValues;
-    window.localStorage.setItem(storageKey, selected);
+    selected = selectedAttributesDefaultValues;
+    window.localStorage.setItem(selectedAttributesStorageKey, selected);
   } else {
     if (data.length > 0)
       selected = data.split(",");
@@ -106,7 +106,7 @@ function refresh_selected_profiles() {
   return selected;
 }
 
-function init_select_picker(selection, selected) {
+function init_attributes_select_picker(selection, selected) {
   selection.selectpicker();
   selection.selectpicker('val', selected);
 
@@ -119,8 +119,8 @@ function init_select_picker(selection, selected) {
       else
         hideAll = true;
     }
-    window.localStorage.setItem(storageKey, values);
-    display_attributes(new Set(values));
+    window.localStorage.setItem(selectedAttributesStorageKey, values);
+    display_attributes(array_to_set(values));
   });
 }
 
@@ -128,7 +128,7 @@ function display_attributes(options) {
   const table = document.getElementById('data-table');
 
   if (table != null) {
-    // add classes that are always shown
+    // add CSS classes that are always shown
     options.add("event");
     options.add("required");
     options.add("no-group");
